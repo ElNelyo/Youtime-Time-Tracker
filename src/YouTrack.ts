@@ -21,7 +21,7 @@ export class YouTrackC {
 
     getCurrentUser(){
         this.youtrack.users.current().then((user) => {
-            //console.log({user});
+            console.log({user});
         });
     }
 
@@ -29,9 +29,13 @@ export class YouTrackC {
         return await this.youtrack.projects.all();
     }
 
-    getIssuesFromProject(project: string){
-        this.youtrack.issues.search('project: '+project).then((issues) => {
-            //console.log(issues);
+    async getIssuesFromProject(project: string){
+         return await this.youtrack.issues.search('project: '+project).then();
+    }
+
+    getExampleIssues(){
+        this.youtrack.issues.search('project: GAMEPLAY').then((issues) => {
+            console.log(issues);
         });
     }
 }
