@@ -38,6 +38,21 @@ export class YouTrackC {
             console.log(issues);
         });
     }
+
+   async sendTime(issue: string){
+       await this.youtrack.workItems.create(issue, {
+            duration: {
+                presentation: '30m'
+            },
+            text: 'fixed bug',
+            type: {
+                name: 'Test',
+                id: '73-1'
+            }
+        }).then(workItem => {
+            console.log({workItem});
+        });
+    }
 }
 
 
