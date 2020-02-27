@@ -6,6 +6,7 @@ import {YouTrackC} from "./YouTrack";
 
 window.addEventListener("DOMContentLoaded", async() => {
 
+
   var h1 = document.getElementsByTagName('h1')[0],
     start = document.getElementById('start'),
     stop = document.getElementById('stop'),
@@ -67,18 +68,33 @@ clear.onclick = function() {
     replaceText(`${type}-version`, (process.versions as any)[type]);
   }
 
-  
-  
+
   var myParent = document.body;
+
+
 async function sendAction(){
+
   var issue = (<HTMLInputElement>document.getElementById("issuesList")).value;
-  console.log(issue);
-  await youtrack.sendTime(issue);
+  var time = hours+"h"+minutes+"m"
+  var text = (<HTMLInputElement>document.getElementById("text-timer")).value;
+
+  if (minutes ==0) {
+    let myNotification = new Notification('YouTime', {
+      body: 'Il est trop tôt pour envoyer votre temps !',
+      icon:"src/assets/logo.png"
+  })
+  }else{
+    await youtrack.sendTime(issue,time,text);
+  }
+  
 }
+
+
+
 async function onChange() {
 
     project = (<HTMLInputElement>document.getElementById("mySelect")).value;
-    console.log(project)
+    
     issues = await youtrack.getIssuesFromProject(project)
     
     var issuesList = document.createElement("select");
@@ -86,7 +102,7 @@ async function onChange() {
     myParent.appendChild(issuesList);
 
     issues.forEach(function(item: any){  
-      console.log(item);
+    
       var newissue = document.createElement("option");
       newissue.value = item.id;
       newissue.text = item.summary

@@ -25,12 +25,15 @@ export class YouTrackC {
         });
     }
 
+    async getWorkItemFromProject(){
+
+    }
     async getProjects(): Promise<any>{
         return await this.youtrack.projects.all();
     }
 
     async getIssuesFromProject(project: string){
-         return await this.youtrack.issues.search('project: '+project).then();
+        return await this.youtrack.issues.search('project: '+project).then();
     }
 
     getExampleIssues(){
@@ -39,17 +42,18 @@ export class YouTrackC {
         });
     }
 
-   async sendTime(issue: string){
-       await this.youtrack.workItems.create(issue, {
+    async sendTime(issue: string,time:string,text:string){
+        await this.youtrack.workItems.create(issue, {
             duration: {
-                presentation: '30m'
+                presentation: time,
             },
-            text: 'fixed bug',
-            type: {
+            text: text,
+            /*type: {
                 name: 'Test',
                 id: '73-1'
-            }
+            }*/
         }).then(workItem => {
+            
             console.log({workItem});
         });
     }
