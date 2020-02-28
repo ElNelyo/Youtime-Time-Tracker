@@ -51,3 +51,8 @@ npm run watch
 ## License
 
 [CC0 1.0 (Public Domain)](LICENSE.md)
+
+reload css
+```
+npx tailwindcss build styles.css -o output.css
+``` 
