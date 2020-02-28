@@ -68,8 +68,8 @@ clear.onclick = function() {
     replaceText(`${type}-version`, (process.versions as any)[type]);
   }
 
-
-  var myParent = document.body;
+  var mainer = document.getElementById("main");
+  var myParent = mainer;
 
 
 async function sendAction(){
@@ -113,6 +113,7 @@ async function onChange() {
 //Create and append select list
 var selectList = document.createElement("select");
 selectList.id = "mySelect";
+selectList.className=  "block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
 selectList.addEventListener("change", onChange);
 myParent.appendChild(selectList);
 
