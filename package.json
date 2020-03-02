@@ -1,14 +1,14 @@
 {
-  "name": "electron-quick-start-typescript",
+  "name": "@nelyo/youtime",
   "version": "1.0.0",
-  "description": "A minimal Electron application written with Typescript",
+  "description": "Simple timer YouTrack",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "start": "npm run build && electron ./dist/main.js"
   },
-  "repository": "https://github.com/electron/electron-quick-start-typescript",
+  "repository": "https://github.com/ElNelyo/youtrack-timer",
   "keywords": [
     "Electron",
     "quick",
