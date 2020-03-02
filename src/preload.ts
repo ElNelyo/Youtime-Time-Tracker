@@ -18,6 +18,8 @@ window.addEventListener("DOMContentLoaded", async() => {
 
   if(store.get('url') !="undefined" && store.get('perm') != "undefined"){
     createYoutrack(store.get('url'),store.get('perm'));
+    }else{
+      createYoutrack("url","perm");
     }
 
   var config = document.createElement("button");

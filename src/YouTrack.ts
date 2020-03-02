@@ -5,15 +5,18 @@ export class YouTrackC {
     token: string;
     youtrack: Youtrack;
 
-    constructor(url:string,perm:string) {
+    constructor(url:string= "url",perm:string= "perm") {
         this.base_url =url;
         this.token=perm;
     }
+
     init() {
+
         const config = {
             baseUrl: this.base_url, 
             token: this.token
         };
+    
         this.youtrack = new Youtrack(config);
     
     }

@@ -2,11 +2,12 @@
   "name": "@nelyo/youtime",
   "version": "1.0.0",
   "description": "Simple timer YouTrack",
+  "main": "./dist/main.js",
   "scripts": {
     "watch": "tsc -w",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "start": "npm run build && electron ./dist/main.js",
-    "dist": "rimraf git-checker-* && electron-packager . --platform=darwin,linux --arch=x64 --icon=app --overwrite",
+    "dist": "rimraf git-checker-* && electron-packager . --platform=darwin,linux --arch=x64 --icon=app --overwrite --out=packages",
     "build": "tsc"
   },
   "repository": "https://github.com/ElNelyo/youtrack-timer",
