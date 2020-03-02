@@ -77,7 +77,19 @@ clear.onclick = function() {
 
 async function sendAction(){
 
-  var issue = (<HTMLInputElement>document.getElementById("issuesList")).value;
+  if (document.getElementById('issuesList') ==null){
+    let myNotification = new Notification('YouTime', {
+      body: 'Vous devez choisir un ticket !',
+      icon:"src/assets/logo.png"
+  })
+
+   return false;
+  } else {
+    var issue = (<HTMLInputElement>document.getElementById("issuesList")).value;
+
+  }
+ 
+
   var time = hours+"h"+minutes+"m"
   var text = (<HTMLInputElement>document.getElementById("text-timer")).value;
 
@@ -88,6 +100,10 @@ async function sendAction(){
   })
   }else{
     await youtrack.sendTime(issue,time,text);
+    let myNotification = new Notification('YouTime', {
+      body: 'Votre temps a correctement été envoyé sur YouTrack',
+      icon:"src/assets/logo.png"
+  })
   }
   
 }
@@ -99,25 +115,40 @@ async function onChange() {
     project = (<HTMLInputElement>document.getElementById("mySelect")).value;
     
     issues = await youtrack.getIssuesFromProject(project)
-    
-    var issuesList = document.createElement("select");
-    issuesList.id = "issuesList";
-    issuesList.className ="block max-w-2xl appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
-    myParent.appendChild(issuesList);
+    if (document.getElementById('issuesList') ==null){
 
-    issues.forEach(function(item: any){  
+      var issuesList = document.createElement("select");
+        issuesList.id = "issuesList";
+       issuesList.className ="block max-w-2xl text-purple-600 appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
+        myParent.appendChild(issuesList);
+        issues.forEach(function(item: any){  
     
-      var newissue = document.createElement("option");
-      newissue.value = item.id;
-      newissue.text = item.summary
-      issuesList.appendChild(newissue);
-    })
+          var newissue = document.createElement("option");
+          newissue.value = item.id;
+          newissue.text = item.summary
+          issuesList.appendChild(newissue);
+        })
+    }else{
+
+      var issuesList_ = <HTMLInputElement>document.getElementById("issuesList")
+      issuesList_.innerHTML = "";
+      issues.forEach(function(item: any){  
+    
+        var newissue = document.createElement("option");
+        newissue.value = item.id;
+        newissue.text = item.summary
+        issuesList_.appendChild(newissue);
+      })
+    }
+    
+
+
   }
 
 //Create and append select list
 var selectList = document.createElement("select");
 selectList.id = "mySelect";
-selectList.className=  "block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
+selectList.className=  "block appearance-none w-full text-purple-600 bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
 selectList.addEventListener("change", onChange);
 myParent.appendChild(selectList);
 
