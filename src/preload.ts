@@ -6,6 +6,7 @@ const Store = require('electron-store');
 const store = new Store();
 
 
+
 window.addEventListener("DOMContentLoaded", async() => {
 
 
@@ -101,6 +102,7 @@ async function onChange() {
     
     var issuesList = document.createElement("select");
     issuesList.id = "issuesList";
+    issuesList.className ="block max-w-2xl appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
     myParent.appendChild(issuesList);
 
     issues.forEach(function(item: any){  
