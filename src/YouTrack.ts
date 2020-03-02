@@ -5,10 +5,9 @@ export class YouTrackC {
     token: string;
     youtrack: Youtrack;
 
-    constructor() {
-        this.base_url = "https://family-v.myjetbrains.com/youtrack";
-        this.token = "";
-
+    constructor(url:string,perm:string) {
+        this.base_url =url;
+        this.token=perm;
     }
     init() {
         const config = {
@@ -21,9 +20,20 @@ export class YouTrackC {
 
     getCurrentUser(){
         this.youtrack.users.current().then((user) => {
-            console.log({user});
-        });
-    }
+            
+            let myNotification = new Notification('YouTime', {
+                body: 'Bienvneue '+user["fullName"],
+                icon:"src/assets/logo.png"
+            })
+        })
+        .catch((error:any) => {
+            console.log(error);
+            let myNotification = new Notification('YouTime', {
+            body: 'Erreur de connexion, vérifier dans configuration',
+            icon:"src/assets/logo.png"});
+        
+    })
+}
 
     async getWorkItemFromProject(){
 
@@ -38,7 +48,7 @@ export class YouTrackC {
 
     getExampleIssues(){
         this.youtrack.issues.search('project: GAMEPLAY').then((issues) => {
-            console.log(issues);
+            //console.log(issues);
         });
     }
 
@@ -54,7 +64,7 @@ export class YouTrackC {
             }*/
         }).then(workItem => {
             
-            console.log({workItem});
+            //console.log({workItem});
         });
     }
 }

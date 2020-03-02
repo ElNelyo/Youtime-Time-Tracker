@@ -9,6 +9,74 @@ const store = new Store();
 
 window.addEventListener("DOMContentLoaded", async() => {
 
+  var youtrack: YouTrackC;
+  var project: any;
+  var issues: any;
+  var mainer = document.getElementById("main");
+  var myParent = mainer;
+  var configuration_wrapper =document.getElementById("configuration-wrapper"); 
+
+  if(store.get('url') !="undefined" && store.get('perm') != "undefined"){
+    createYoutrack(store.get('url'),store.get('perm'));
+    }
+
+  var config = document.createElement("button");
+  config.value="Configuration";
+  config.id="configuration";
+  config.innerHTML="Configuration";
+  config.addEventListener("click", openPerms);
+  configuration_wrapper.appendChild(config);
+ 
+ 
+  function openPerms(){
+    var config_url = document.createElement("input");
+    config_url.value=store.get('url');
+    config_url.id="configuration_url";
+    configuration_wrapper.appendChild(config_url);
+
+
+    var config_perm = document.createElement("input");
+    config_perm.value=store.get('perm');
+    config_perm.id="configuration_perm";
+    configuration_wrapper.appendChild(config_perm);
+
+    var valide_perm = document.createElement("button");
+    valide_perm.value="Valider";
+    valide_perm.id="validate_perm";
+    valide_perm.innerHTML="Valider permissions";
+    valide_perm.addEventListener("click", savePerms);
+    configuration_wrapper.appendChild(valide_perm);
+ 
+    
+  }
+
+  function savePerms(){
+    var url = (<HTMLInputElement>document.getElementById("configuration_url")).value;
+    var perm = (<HTMLInputElement>document.getElementById("configuration_perm")).value;
+    store.set('url', url);
+    store.set('perm', perm);
+
+    createYoutrack(store.get('url'),store.get('perm'));
+  }
+
+
+function createYoutrack(url:string,perm:string){
+  youtrack = new YouTrackC(url,perm);
+  youtrack.init();
+  youtrack.getCurrentUser();
+  youtrack.getExampleIssues();
+
+  youtrack.getProjects().then(projects =>{
+    projects.forEach(function(item: any){  
+      var newoption = document.createElement("option");
+      newoption.text = item.shortName;
+      selectList.appendChild(newoption);
+    })
+
+  } );
+
+}
+
 
   var h1 = document.getElementsByTagName('h1')[0],
     start = document.getElementById('start'),
@@ -35,6 +103,7 @@ function add() {
 
     timer();
 }
+
 function timer() {
     t = setTimeout(add, 1000);
 }
@@ -56,8 +125,7 @@ clear.onclick = function() {
 }
 
 
-  var project: any;
-  var issues: any;
+
   
 
   const replaceText = (selector: string, text: string) => {
@@ -71,8 +139,6 @@ clear.onclick = function() {
     replaceText(`${type}-version`, (process.versions as any)[type]);
   }
 
-  var mainer = document.getElementById("main");
-  var myParent = mainer;
 
 
 async function sendAction(){
@@ -107,6 +173,10 @@ async function sendAction(){
   }
   
 }
+
+
+
+
 
 
 
@@ -145,6 +215,10 @@ async function onChange() {
 
   }
 
+
+
+
+
 //Create and append select list
 var selectList = document.createElement("select");
 selectList.id = "mySelect";
@@ -152,20 +226,6 @@ selectList.className=  "block appearance-none w-full text-purple-600 bg-gray-200
 selectList.addEventListener("change", onChange);
 myParent.appendChild(selectList);
 
-  let youtrack = new YouTrackC();
-  youtrack.init();
-  youtrack.getCurrentUser();
-  youtrack.getExampleIssues();
-
-  youtrack.getProjects().then(projects =>{
-    console.log(projects)
-    projects.forEach(function(item: any){  
-      var newoption = document.createElement("option");
-      newoption.text = item.shortName;
-      selectList.appendChild(newoption);
-    })
-
-  } );
 
 
 
