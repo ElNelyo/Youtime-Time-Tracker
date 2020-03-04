@@ -19,6 +19,18 @@ Utilisation très simple et rapide.
 
 Tout est prêt ! 
 
+OU 
+
+'''
+git clone https://github.com/ElNelyo/Youtime-Time-Tracker.git
+'''
+
+'''
+npm install
+npm start
+
+'''
+
 ## Crédits 
 - [Electron](https://github.com/electron/electron)
 - [YouTrack Rest Api](https://github.com/shanehofstetter/youtrack-rest-client)
