@@ -12,13 +12,13 @@ export class YouTrackC {
 
     init() {
 
+     
         const config = {
             baseUrl: this.base_url, 
             token: this.token
         };
     
-        this.youtrack = new Youtrack(config);
-    
+        this.youtrack = new Youtrack(config); 
     }
 
     getCurrentUser(){
@@ -42,7 +42,9 @@ export class YouTrackC {
 
     }
     async getProjects(): Promise<any>{
-        return await this.youtrack.projects.all();
+        var projects = this.youtrack.projects.all({$top:500});
+        
+        return await projects;
     }
 
     async getIssuesFromProject(project: string){
@@ -50,9 +52,9 @@ export class YouTrackC {
     }
 
     getExampleIssues(){
-        this.youtrack.issues.search('project: GAMEPLAY').then((issues) => {
+       // this.youtrack.issues.search('project: GAMEPLAY').then((issues) => {
             //console.log(issues);
-        });
+     //   });
     }
 
     async sendTime(issue: string,time:string,text:string){
