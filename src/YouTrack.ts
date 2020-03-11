@@ -25,7 +25,7 @@ export class YouTrackC {
         this.youtrack.users.current().then((user) => {
             
             let myNotification = new Notification('YouTime', {
-                body: 'Bienvneue '+user["fullName"],
+                body: 'Bienvenue '+user["fullName"],
                 icon:"src/assets/logo.png"
             })
         })
