@@ -5,7 +5,7 @@ require('hacktimer');
 const Store = require('electron-store');
 
 const store = new Store();
-
+var config = true;
 
 
 window.addEventListener("DOMContentLoaded", async() => {
@@ -23,32 +23,51 @@ window.addEventListener("DOMContentLoaded", async() => {
       createYoutrack("url","perm");
     }
 
-  var config = document.createElement("button");
-  config.value="Configuration";
-  config.id="configuration";
-  config.innerHTML="Configuration";
-  config.addEventListener("click", openPerms);
-  configuration_wrapper.appendChild(config);
+  var cog = document.createElement("i");
+  cog.className="fas fa-cog fa-2x text-purple-600";
+  cog.addEventListener("click", openPerms);
+  configuration_wrapper.appendChild(cog);
+
+
  
  
   function openPerms(){
-    var config_url = document.createElement("input");
-    config_url.value=store.get('url');
-    config_url.id="configuration_url";
-    configuration_wrapper.appendChild(config_url);
 
 
-    var config_perm = document.createElement("input");
-    config_perm.value=store.get('perm');
-    config_perm.id="configuration_perm";
-    configuration_wrapper.appendChild(config_perm);
-
-    var valide_perm = document.createElement("button");
-    valide_perm.value="Valider";
-    valide_perm.id="validate_perm";
-    valide_perm.innerHTML="Valider permissions";
-    valide_perm.addEventListener("click", savePerms);
-    configuration_wrapper.appendChild(valide_perm);
+    if(config){
+      var config_url = document.createElement("input");
+      config_url.value=store.get('url');
+      config_url.id="configuration_url";
+      config_url.className ="block max-w-2xl text-purple-600 appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
+      configuration_wrapper.appendChild(config_url);
+  
+  
+      var config_perm = document.createElement("input");
+      config_perm.value=store.get('perm');
+      config_perm.id="configuration_perm";
+      config_perm.className ="block max-w-2xl text-purple-600 appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
+      configuration_wrapper.appendChild(config_perm);
+  
+      var valide_perm = document.createElement("button");
+      valide_perm.value="Valider";
+      valide_perm.id="validate_perm";
+      valide_perm.innerHTML="Valider permissions";
+      valide_perm.addEventListener("click", savePerms);
+      valide_perm.className = "bg-purple-400 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded";
+      configuration_wrapper.appendChild(valide_perm);
+      config = false
+    }else{
+      var valide_perm_ = document.getElementById("configuration_url");
+      var config_perm_ = document.getElementById("configuration_perm");
+      var config_url_ = document.getElementById("validate_perm");
+      configuration_wrapper.removeChild(valide_perm_)
+      configuration_wrapper.removeChild(config_perm_)
+      configuration_wrapper.removeChild(config_url_)
+      config = true;
+    }
+    
+    
+  
  
     
   }
@@ -152,12 +171,12 @@ async function sendAction(){
       icon:"src/assets/logo.png"
   })
 
-   return false;
+  return false;
   } else {
     var issue = (<HTMLInputElement>document.getElementById("issuesList")).value;
 
   }
- 
+
 
   var time = hours+"h"+minutes+"m"
   var text = (<HTMLInputElement>document.getElementById("text-timer")).value;
