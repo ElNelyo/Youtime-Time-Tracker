@@ -28,6 +28,18 @@ window.addEventListener("DOMContentLoaded", async() => {
   cog.addEventListener("click", openPerms);
   configuration_wrapper.appendChild(cog);
 
+  var more = document.getElementById("more");
+  var addMinutesButton = document.createElement("button");
+  addMinutesButton.innerHTML="+";
+  addMinutesButton.addEventListener("click",addMinutes);
+  more.appendChild(addMinutesButton);
+  
+ 
+  var addHourButton = document.createElement("button");
+  addHourButton.innerHTML="+";
+  addHourButton.addEventListener("click",addHour);
+  more.appendChild(addHourButton);
+
 
  
  
@@ -109,6 +121,20 @@ function createYoutrack(url:string,perm:string){
     t:any;
 
     send.addEventListener("click", sendAction);
+
+function addHour(){
+      hours++;
+      h1.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+}
+
+function addMinutes(){
+  minutes++;
+  if (minutes >= 60) {
+      minutes = 0;
+      hours++;
+  }
+  h1.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+}
 
 function add() {
     seconds++;
